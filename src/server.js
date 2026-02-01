@@ -14,9 +14,12 @@ connectDB();
 // Initialize express app
 const app = express();
 
-// Middleware
+// CORS
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: [
+    'http://localhost:3000',
+    'https://ski-instructor-frontend-vercel.vercel.app'
+  ],
   credentials: true
 }));
 app.use(express.json());
