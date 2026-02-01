@@ -10,16 +10,26 @@ dotenv.config();
 
 // Connect to database
 connectDB();
-
+d
 // Initialize express app
 const app = express();
 
 // CORS
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'https://ski-instructor-frontend-vercel.vercel.app'
-  ],
+  origin: function(origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      /^https:\/\/ski-instructor-frontend.*\.vercel\.app$/
+    ];
+    
+    if (!origin || allowedOrigins.some(allowed => 
+      typeof allowed === 'string' ? allowed === origin : allowed.test(origin)
+    )) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());
